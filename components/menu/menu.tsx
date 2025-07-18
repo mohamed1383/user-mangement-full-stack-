@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FiUsers } from "react-icons/fi";
 import { HiOutlineUserAdd } from "react-icons/hi";
 
+
 export default function Menu({ activeBtn }: { activeBtn: boolean }) {
     return (
         <>

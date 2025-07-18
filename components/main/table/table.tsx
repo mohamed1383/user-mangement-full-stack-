@@ -1,9 +1,68 @@
 import React from 'react'
+import UserInfo from './userInfo'
+import ReactPaginate from 'react-paginate'
 
 export default function Table() {
+
+
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className='w-full h-[62%] mt-5 border rounded-[10px] border-[#e4e4e7] bg-white box-border px-8 overflow-auto'>
+        <h1 className='mt-4 font-semibold font-sans text-2xl mb-6'>User Management</h1>
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between py-4 px-6 transition duration-200 hover:bg-[#f4f4f580]">
+
+            <div className="w-[220px] text-[#71717a]">
+              user
+            </div>
+
+
+            <div className="text-[#71717a]">
+              rule
+            </div>
+
+
+            <div className="text-[#71717a]">
+              status
+            </div>
+
+
+            <div className="text-[#71717a]">
+              actions
+            </div>
+
+          </div>
+          <UserInfo></UserInfo>
+          <UserInfo></UserInfo>
+          <UserInfo></UserInfo>
+          <UserInfo></UserInfo>
+          <UserInfo></UserInfo>
+          <UserInfo></UserInfo>
+        </div>
+      </div>
+
+      <ReactPaginate
+        pageCount={6}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={1}
+        onPageChange={(e) => console.log("Page:", e.selected + 1)}
+        previousLabel="previous"
+        nextLabel="next"
+        breakLabel="..."
+        containerClassName="flex gap-2 items-center justify-center mt-8"
+        activeLinkClassName="bg-purple-600 text-white"
+        pageClassName="rounded"
+        pageLinkClassName="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded block text-center"
+        previousClassName="rounded"
+        previousLinkClassName="px-3 py-1 text-sm border block"
+        nextClassName="rounded"
+        nextLinkClassName="px-3 py-1 text-sm border block"
+        breakClassName="text-gray-400"
+        breakLinkClassName="px-3 py-1 text-sm"
+      />
+
+
+
+    </>
   )
 }
