@@ -7,6 +7,8 @@ const adminHandler = async (req, res) => {
     if (req.method == "POST") {
         const { name, email, password, rule, status } = req.body
 
+        const id = (await userModel.find()).length + 1
+
         if (!name) return res.json({ message: ["please enter a name"] })
         if (!email) return res.json({ message: ["please enter a email"] })
         if (!rule) return res.json({ message: ["please enter a rule"] })
@@ -23,7 +25,7 @@ const adminHandler = async (req, res) => {
 
 
         if (validate == true) {
-            userModel.create({ name, email, password , rule, status })
+            userModel.create({id, name, email, password , rule, status })
 
             return res.json({ message: ["user added"] })
         } else {

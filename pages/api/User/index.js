@@ -7,6 +7,7 @@ const userHandler = async (req, res) => {
         isConnect()
         let { name, email, rule, status } = req.body
     
+        const id = (await userModel.find()).length + 1
 
         if (!name) return res.json({ message: ["please enter a name"] })
         if (!email) return res.json({ message: ["please enter a email"] })
@@ -23,12 +24,17 @@ const userHandler = async (req, res) => {
         if(findEmail.length) return res.json({message: ["email alredy exist"]})
 
         if (validate == true) {
-            userModel.create({ name, email, password, rule, status })
+            userModel.create({id , name, email, password, rule, status })
 
             return res.json({ message: ["user added"] })
         } else {
             return res.json({ validate })
         }
+
+    } else if(req.method == "GET"){
+        const allUsers = await userModel.find()
+
+        return res.json({users: allUsers})
 
     } else {
         return res.json({ message: ["please enter a valid request"] })
