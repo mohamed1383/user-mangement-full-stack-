@@ -2,8 +2,7 @@ import React from 'react'
 import UserInfo from './userInfo'
 import ReactPaginate from 'react-paginate'
 
-export default function Table() {
-
+export default function Table({allUsers} : {allUsers: any}) {
 
   return (
     <>
@@ -32,17 +31,13 @@ export default function Table() {
             </div>
 
           </div>
-          <UserInfo></UserInfo>
-          <UserInfo></UserInfo>
-          <UserInfo></UserInfo>
-          <UserInfo></UserInfo>
-          <UserInfo></UserInfo>
-          <UserInfo></UserInfo>
+
+          {allUsers?.map((item: any) => (<UserInfo {...item}></UserInfo>))}
         </div>
       </div>
 
       <ReactPaginate
-        pageCount={6}
+        pageCount={Math.ceil(allUsers.length / 4)}
         pageRangeDisplayed={2}
         marginPagesDisplayed={1}
         onPageChange={(e) => console.log("Page:", e.selected + 1)}
@@ -50,19 +45,16 @@ export default function Table() {
         nextLabel="next"
         breakLabel="..."
         containerClassName="flex gap-2 items-center justify-center mt-8"
-        activeLinkClassName="bg-purple-600 text-white"
+        activeLinkClassName="bg-purple-600 text-white hover:text-purple-600"
         pageClassName="rounded"
-        pageLinkClassName="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded block text-center"
+        pageLinkClassName="px-3 py-1 text-purple-600 text-sm bg-gray-100 hover:bg-gray-200 rounded block text-center"
         previousClassName="rounded"
-        previousLinkClassName="px-3 py-1 text-sm border block"
+        previousLinkClassName="px-3 py-1 text-sm border block rounded-[5px] border-purple-600 transition duration-200 hover:text-white hover:bg-purple-600"
         nextClassName="rounded"
-        nextLinkClassName="px-3 py-1 text-sm border block"
+        nextLinkClassName="px-3 py-1 text-sm border block rounded-[5px] border-purple-600 transition duration-200 hover:text-white hover:bg-purple-600"
         breakClassName="text-gray-400"
         breakLinkClassName="px-3 py-1 text-sm"
       />
-
-
-
     </>
   )
 }
