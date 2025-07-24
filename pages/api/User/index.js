@@ -5,7 +5,7 @@ import userModel from "../../../models/user"
 const userHandler = async (req, res) => {
     if (req.method == "POST") {
         isConnect()
-        let { name, email, rule, status } = req.body
+        let { name , email , password , rule, status } = req.body
     
         const id = (await userModel.find()).length + 1
 
