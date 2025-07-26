@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useMutation } from '@tanstack/react-query'
+import toast, { Toaster } from 'react-hot-toast';
 
 
 type AddUserInput = {
@@ -14,8 +15,6 @@ type AddUserInput = {
 const addUser = async (name: string, email: string, password: string, rule: string, status: string) => {
 
   const changedWord = rule.replace(/\b\w/g, char => char.toUpperCase())
-
-  console.log(rule)
 
   const add = await axios.post(`http://localhost:3000/api/${changedWord}`, {
     name,
@@ -40,7 +39,25 @@ export default function Inputs() {
 
   const addUserHandler = useMutation({
     mutationKey: ["addUser"],
-    mutationFn: (data: AddUserInput) => addUser(data.name, data.email, data.password, data.rule, data.status)
+    mutationFn: (data: AddUserInput) => addUser(data.name, data.email, data.password, data.rule, data.status),
+    onSuccess: (data) => {
+      if (data.statusCode == 200) {
+
+        toast.success(data?.message, {
+          duration: 1500
+        })
+
+      } else {
+
+        data.message.length < 2 ? toast.error(data.message[0].message) : data?.message?.map((item: any) => {
+          console.log(item)
+          toast.error(item.message, {
+            duration: 3000
+          })
+        })
+        
+      }
+    }
   })
 
   const submitHandler = (e: Event) => {
@@ -57,8 +74,6 @@ export default function Inputs() {
         status: userInfo.status
       })
     }
-
-    console.log(addUserHandler.data, addUserHandler.error)
   }
 
   const changeFieldHandler = (e: Event) => {
@@ -103,10 +118,6 @@ export default function Inputs() {
       status: "active"
     })
   }
-
-  useEffect(() => {
-    console.log(userInfo)
-  }, [userInfo])
 
   return (
     <div className="w-full flex justify-center mt-20">
@@ -194,6 +205,8 @@ export default function Inputs() {
           </button>
         </div>
       </form>
+
+      <Toaster position='top-center'></Toaster>
     </div>
   )
 }
